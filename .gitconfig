@@ -1,0 +1,7 @@
+[color]
+	ui = auto
+[user]
+	name = Samuel Charron
+	email = samuel.charron@gmail.com
+[alias]
+	oops = commit --amend

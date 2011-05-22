@@ -41,3 +41,4 @@ link .bash_profile
 link .bashrc
 link .vimrc
 link .vim
+link .gitconfig
