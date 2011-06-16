@@ -60,7 +60,7 @@ function prompt()
   then
     # Git prompt
     local name=$(basename $(readlink -f $(__gitdir)/..))
-    local path=$(pwd | sed -re s,$(readlink -f $(__gitdir)/..),,)
+    local path=$(readlink -f $(pwd) | sed -re s,$(readlink -f $(__gitdir)/..),,)
     local branch=$(git symbolic-ref HEAD 2>/dev/null)
     branch=${branch##refs/heads/}
     local dirty=""
