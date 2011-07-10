@@ -10,3 +10,5 @@ set shiftwidth=2
 
 " Force indent plugin
 filetype plugin indent on
+
+set paste
