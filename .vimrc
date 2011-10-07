@@ -10,3 +10,6 @@ set shiftwidth=2
 
 " Force indent plugin
 filetype plugin indent on
+
+" Highlight search results
+set hlsearch
