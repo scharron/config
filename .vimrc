@@ -13,3 +13,6 @@ filetype plugin indent on
 
 " Highlight search results
 set hlsearch
+
+" Default to paste mode to avoid double-indentation
+set paste

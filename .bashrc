@@ -31,7 +31,8 @@ export MANPAGER="less -FiRswX"
 export PATH=$PATH:$HOME/local/bin/
 # RoR config
 export PATH=$PATH:/var/lib/gems/1.8/bin/
-
+# Python 3
+export PATH=$HOME/local/python/bin/:$PATH
 
 # Prompt
 lred="\[\e[1;31m\]"
