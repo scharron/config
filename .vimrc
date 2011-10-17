@@ -16,3 +16,6 @@ set hlsearch
 
 " Default to paste mode to avoid double-indentation
 set paste
+
+" Syntax on (else no highlight on debian)
+syntax on
