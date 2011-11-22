@@ -2,6 +2,6 @@
 	ui = auto
 [user]
 	name = Samuel Charron
-	email = samuel.charron@gmail.com
+	email = scharron@plizy.com
 [alias]
 	oops = commit --amend
