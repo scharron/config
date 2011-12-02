@@ -33,6 +33,7 @@ export PATH=$PATH:$HOME/local/bin/
 export PATH=$PATH:/var/lib/gems/1.8/bin/
 # Python 3
 export PATH=$HOME/local/python/bin/:$PATH
+export PATH=$HOME/local/darktable/bin/:$PATH
 
 # Prompt
 lred="\[\e[1;31m\]"
