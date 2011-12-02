@@ -98,3 +98,11 @@ function prompt()
   PS1="$PS1$lwhite→$reset "
   export PS1=$PS1
 }
+
+[[ -s "/usr/share/ruby-rvm/scripts/rvm" ]] && . "/usr/share/ruby-rvm/scripts/rvm" # Pour RVM 
+rvm use 1.9.2
+
+
+
+alias api-test-server="bundle exec thin start -e test"
+alias api-test-run="bundle exec rspec --fail-fast"
