@@ -14,7 +14,7 @@ shopt -s histappend
 #  COLUMNS variables.
 shopt -s checkwinsize
 # Enable completion
-. /etc/bash_completion
+test -f /etc/bash_completion && . /etc/bash_completion
 
 
 # Aliases
@@ -55,14 +55,33 @@ dgrey="\[\e[0;37m\]"
 reset="\[\e[0m\]"
 
 PROMPT_COMMAND='prompt'
+
+function gitdir()
+{
+        if [ -z "${1-}" ]; then
+                if [ -n "${__git_dir-}" ]; then
+                        echo "$__git_dir"
+                elif [ -d .git ]; then
+                        echo .git
+                else
+                        git rev-parse --git-dir 2>/dev/null
+                fi
+        elif [ -d "$1/.git" ]; then
+                echo "$1/.git"
+        else
+                echo "$1"
+        fi
+}
+
+
 function prompt()
 {
   __res=$?
-  if test $(__gitdir)
+  if test $(gitdir)
   then
     # Git prompt
-    local name=$(basename $(readlink -f $(__gitdir)/..))
-    local path=$(readlink -f $(pwd) | sed -re s,$(readlink -f $(__gitdir)/..),,)
+    local name=$(basename $(readlink -f $(gitdir)/..))
+    local path=$(readlink -f $(pwd) | sed -re s,$(readlink -f $(gitdir)/..),,)
     local branch=$(git symbolic-ref HEAD 2>/dev/null)
     branch=${branch##refs/heads/}
     local dirty=""

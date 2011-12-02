@@ -11,4 +11,11 @@ set shiftwidth=2
 " Force indent plugin
 filetype plugin indent on
 
+" Highlight search results
+set hlsearch
+
+" Default to paste mode to avoid double-indentation
 set paste
+
+" Syntax on (else no highlight on debian)
+syntax on
