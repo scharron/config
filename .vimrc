@@ -19,3 +19,10 @@ set paste
 
 " Syntax on (else no highlight on debian)
 syntax on
+
+" Transform tabs into spaces
+set expandtab
+
+" Set tabs equal to 2 spaces
+set ts=2
+
