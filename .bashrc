@@ -106,3 +106,6 @@ rvm use 1.9.2
 
 alias api-test-server="bundle exec thin start -e test"
 alias api-test-run="bundle exec rspec --fail-fast"
+
+export EC2_PRIVATE_KEY=/home/scharron/.ec2/pk-ZE2X3UDLCMSJMAY6NNHUJ3IGGB356TCR.pem
+export EC2_CERT=/home/scharron/.ec2/cert-ZE2X3UDLCMSJMAY6NNHUJ3IGGB356TCR.pem
