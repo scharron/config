@@ -4,13 +4,18 @@
 [ -z "$PS1" ] && return
 
 # History config
-HISTCONTROL=ignoredups
+HISTCONTROL=ignoredups:ignorespace
 HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
 
+
+# When displaying prompt, write previous command to history file so that,
+# any new shell immediately gets the history lines from all previous shells.
+PROMPT_COMMAND='history -a'
+
 # Misc config
-# After each command, chez window size and update LINES and 
+# After each command, check window size and update LINES and 
 #  COLUMNS variables.
 shopt -s checkwinsize
 # Enable completion
@@ -26,14 +31,6 @@ export EDITOR=vim
 export PAGER="less -FirSwX"
 export MANPAGER="less -FiRswX"
 
-
-# Path
-export PATH=$PATH:$HOME/local/bin/
-# RoR config
-export PATH=$PATH:/var/lib/gems/1.8/bin/
-# Python 3
-export PATH=$HOME/local/python/bin/:$PATH
-export PATH=$HOME/local/darktable/bin/:$PATH
 
 # Prompt
 lred="\[\e[1;31m\]"
@@ -80,8 +77,8 @@ function prompt()
   if test $(gitdir)
   then
     # Git prompt
-    local name=$(basename $(readlink -f $(gitdir)/..))
-    local path=$(readlink -f $(pwd) | sed -re s,$(readlink -f $(gitdir)/..),,)
+    local name=$(basename $(readlink -f "$(gitdir)"/..))
+    local path=$(readlink -f "$(pwd)" | sed -re s,$(readlink -f "$(gitdir)"/..),,)
     local branch=$(git symbolic-ref HEAD 2>/dev/null)
     branch=${branch##refs/heads/}
     local dirty=""
@@ -99,3 +96,15 @@ function prompt()
   PS1="$PS1$lwhite→$reset "
   export PS1=$PS1
 }
+
+
+# Path
+export PATH=$PATH:$HOME/local/bin/
+# Python 3
+export PATH=$HOME/local/python/bin/:$PATH
+# Darktable
+export PATH=$HOME/local/darktable/bin/:$PATH
+# nodejs
+export PATH=$HOME/local/nodejs/bin/:$PATH
+# jsctags (vim js plugin)
+export NODE_PATH=/home/scharron/local/nodejs/lib/jsctags/:$NODE_PATH
