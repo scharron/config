@@ -33,7 +33,7 @@ cd $prefix
 
 # Check if repository exists
 test ! -e config -o -d config || die "$prefix/config already exist but it's not a directory."
-test -d config || git clone git@github.com:scharron/config.git
+test -d config || (git clone git@github.com:scharron/config.git && git submodule update -i)
 
 # Create symlinks
 cd $prefix/config
