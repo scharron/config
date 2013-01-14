@@ -1,3 +1,5 @@
+let g:syntastic_python_checker="pyflakes"
+
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
@@ -11,7 +13,7 @@ set ruler
 set laststatus=2
 
 " Indent width
-set shiftwidth=2
+set shiftwidth=4
 
 " Force indent plugin
 filetype plugin indent on
@@ -31,7 +33,7 @@ syntax on
 set expandtab
 
 " Set tabs equal to 2 spaces
-set ts=2
+set ts=4
 
 " Make mouse middle click paste without formatting it.
 map <MouseMiddle> <Esc>"*p
@@ -54,3 +56,4 @@ autocmd FileType html,xhtml,xml,htmldjango,htmljinja,eruby,mako source ~/.vim/bu
 " Tagbar plugin configuration
 let g:tagbar_usearrows = 1
 nnoremap <leader>l :TagbarToggle<CR>
+
