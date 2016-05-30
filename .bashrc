@@ -1,3 +1,4 @@
+#!/bin/bash
 # Things done in non-login shells (and login shells…)
 
 # If not running interactively, don't do anything
@@ -73,6 +74,10 @@ function gitdir()
 
 function prompt()
 {
+  if [ "$PWD" != "$MYOLDPWD" ]; then
+    MYOLDPWD="$PWD"
+    test -f tools/setup_venv.sh && test -d virtualenv && source tools/setup_venv.sh
+  fi
   __res=$?
   if test $(gitdir)
   then
@@ -85,12 +90,16 @@ function prompt()
     git diff --no-ext-diff --quiet --exit-code || dirty="C"
     test -n "$(git ls-files --others --exclude-standard)" && dirty="${dirty}U"
     test -n "$dirty" && dirty=" $dirty"
-    PS1="$dblue($branch) $dgreen$name$lyellow$path$lpurple$dirty$reset "
+    PS1="$dorange($branch) $dgreen$name$lyellow$path$lpurple$dirty$reset "
   else
     # Normal prompt
     local name=$(pwd | sed -re s,$(readlink -f ~),,)
     local home=$(pwd | grep -E "^$(readlink -f ~)" > /dev/null 2> /dev/null && echo '~')
     PS1="$lyellow$home$dgreen$name$reset "
+  fi
+  if test ! -z "$VIRTUALENV"
+  then
+      PS1="$dblue(virtualenv) $PS1"
   fi
   PS1="$PS1\`test \$__res -eq 0 && echo -n '$lgreen'[✔] || echo -n '$lred'[✘]; echo $reset\`"
   PS1="$PS1$lwhite→$reset "
@@ -101,10 +110,33 @@ function prompt()
 # Path
 export PATH=$PATH:$HOME/local/bin/
 # Python 3
-export PATH=$HOME/local/python/bin/:$PATH
-# Darktable
-export PATH=$HOME/local/darktable/bin/:$PATH
-# nodejs
-export PATH=$HOME/local/nodejs/bin/:$PATH
-# jsctags (vim js plugin)
-export NODE_PATH=/home/scharron/local/nodejs/lib/jsctags/:$NODE_PATH
+export PATH=$HOME/local/dirty-py3/bin/:$PATH
+
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+
+
+function _list_tests()
+{
+  local curw
+  COMPREPLY=()
+  curw=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=($(compgen -W '`ls tests`' -- $curw))
+  return 0
+}
+
+complete -F _list_tests test.sh
+
+function tgit()
+{
+    res="$(git $*)"
+    status=$?
+    echo "$res"
+    ( killall espeak; echo "git $*" | espeak ; echo "$res" | espeak ) > /dev/null 2> /dev/null &
+    return $status
+}
+
+#alias git="tgit"
+
+alias intellij="~/Projects/intellij/bin/idea.sh"
+
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle/

@@ -1,4 +1,7 @@
-let g:syntastic_python_checker="pyflakes"
+let g:syntastic_python_checker="flake8"
+let syntastic_python_checker_args="--ignore=E501"
+filetype off
+set runtimepath+=$GOROOT/misc/vim
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -57,3 +60,53 @@ autocmd FileType html,xhtml,xml,htmldjango,htmljinja,eruby,mako source ~/.vim/bu
 let g:tagbar_usearrows = 1
 nnoremap <leader>l :TagbarToggle<CR>
 
+" python-mode config
+let g:pymode_doc = 1
+let g:pymode_lint = 1
+let g:pymode_lint_onfly = 0
+let g:pymode_lint_write = 1
+let g:pymode_lint_cwindow = 0
+let g:pymode_lint_ignore = ""
+let g:pymode_lint_checker = "flake8,pyflakes,pep8"
+let g:pymode_lint_message = 1
+let g:pymode_lint_signs = 1
+let g:pymode_folding = 0
+let g:pymode_motion = 1
+let g:pymode_virtualenv = 0
+let g:pymode_indent = 1
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_print_as_function = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+let g:pymode_syntax_string_formatting = g:pymode_syntax_all
+let g:pymode_syntax_string_format = g:pymode_syntax_all
+let g:pymode_syntax_string_templates = g:pymode_syntax_all
+let g:pymode_syntax_doctests = g:pymode_syntax_all
+let g:pymode_syntax_builtin_objs = g:pymode_syntax_all
+let g:pymode_syntax_builtin_funcs = g:pymode_syntax_all
+let g:pymode_syntax_highlight_exceptions = g:pymode_syntax_all
+let g:pymode_syntax_slow_sync = 0
+
+fun! CloseTempBuffer() "{{{
+    pclose
+endfunction "}}}
+
+let g:current_doc_word = ""
+fun! SwitchTempBuffer(word) "{{{
+    if g:current_doc_word == a:word
+        pclose
+        let g:current_doc_word = ""
+    else
+        let g:current_doc_word = a:word
+        call pymode#doc#Show(a:word)
+    endif
+endfunction "}}}
+
+exe "nnoremap <silent> <buffer> H :call SwitchTempBuffer(expand('<cword>'))<CR>"
+exe "vnoremap <silent> <buffer> H :<C-U>call SwitchTempBuffer(@*)<CR>"
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! %!sudo tee > /dev/null %
+
+autocmd FileType go autocmd BufWritePre <buffer> Fmt

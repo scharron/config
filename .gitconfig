@@ -5,3 +5,8 @@
 	email = samuel.charron@gmail.com
 [alias]
 	oops = commit --amend
+	claune = clone
+	antoine-de-claune = clone
+	adc = clone
+[push]
+	default = simple
